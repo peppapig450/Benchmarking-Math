@@ -1,0 +1,16 @@
+Mathematical Benchmarking:
+    - Calculus:
+        - Simpson's Rule
+            - Langs:
+                - Fortran
+                - Python:
+                    - NumPy
+                    - SciPy
+                - C
+                - C++
+                - Octave
+                - Rust
+                - Julia
+                - Lisp
+                - Go
+                - R
