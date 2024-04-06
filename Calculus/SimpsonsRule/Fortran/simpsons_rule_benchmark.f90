@@ -1,6 +1,6 @@
 program simpsons_rule_benchmark
         implicit none
-        character(len=100) :: func_str
+        character(len=100) :: func_str, a_str, b_str, n_str
         real :: a, b, result
         integer :: num_intervals
 
@@ -12,9 +12,14 @@ program simpsons_rule_benchmark
 
         ! Get function expression, lower limit, upper limit, and number of intervals
         call get_command_argument(1, func_str)
-        call get_command_argument(2, a)
-        call get_command_argument(3, b)
-        call get_command_argument(4, num_intervals)
+        call get_command_argument(2, a_str)
+        call get_command_argument(3, b_str)
+        call get_command_argument(4, n_str)
+
+        ! Convert strings to numbers
+        read(a_str, *) a
+        read(b_str, *) b
+        read(n_str, *) num_intervals
 
         ! Integrate using Simpson's Rule
         result = simpsons_rule(func_str, a, b, num_intervals)
@@ -29,7 +34,7 @@ contains
                 implicit none
                 real :: a, b
                 character(len=100) :: func_str
-                real :: h, sum, x
+                real :: h, sum
                 integer :: i, num_intervals
                 real :: eval_func
 
