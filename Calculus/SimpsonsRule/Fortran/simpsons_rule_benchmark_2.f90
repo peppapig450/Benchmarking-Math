@@ -31,20 +31,16 @@ contains
 
     ! Function to evaluate the function expression
     real function eval_func(x, func_str)
+        implicit none
         real :: x
         character(len=100) :: func_str
-        character(len=100) :: temp_str
-        integer :: ios
+        real :: result
 
-        ! Create a temporary string containing the expression
-        write(temp_str, '(A, F10.6)') trim(func_str), x
+        ! Parse and evaluate the function expression
+        read(func_str, *) result
+        result = result(x)
 
-        ! Evaluate the expression using built-in evaluator
-        read(temp_str, *, iostat=ios) eval_func
-        if (ios /= 0) then
-            print *, "Error evaluating function expression."
-            stop
-        end if
+        eval_func = result
     end function eval_func
 
     ! Function to integrate using Simpson's rule
@@ -52,8 +48,9 @@ contains
         implicit none
         real :: a, b
         character(len=100) :: func_str
+        integer :: num_intervals
         real :: h, sum
-        integer :: i, num_intervals
+        real :: x
 
         ! Calculate the interval length
         h = (b - a) / num_intervals
@@ -63,11 +60,8 @@ contains
 
         ! Apply Simpson's rule
         sum = sum + eval_func(a, func_str)
-        do i = 1, num_intervals-1, 2
-            sum = sum + 4.0 * eval_func(a + i * h, func_str)
-        end do
-        do i = 2, num_intervals-2, 2
-            sum = sum + 2.0 * eval_func(a + i * h, func_str)
+        do x = a + h, b - h, h
+                sum = sum + 4.0 * eval_func(x, func_str)
         end do
         sum = sum + eval_func(b, func_str)
         sum = sum * h / 3.0
